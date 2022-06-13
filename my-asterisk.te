@@ -1,0 +1,17 @@
+
+module my-asterisk 1.0;
+
+require {
+	type var_lib_t;
+	type user_home_t;
+	type asterisk_t;
+	class dir { add_name remove_name write };
+	class file { create getattr lock open read unlink write };
+}
+
+#============= asterisk_t ==============
+allow asterisk_t user_home_t:file read;
+
+#!!!! WARNING 'asterisk_t' is not allowed to write or create to var_lib_t.  Change the label to asterisk_var_lib_t.
+allow asterisk_t var_lib_t:dir { add_name remove_name write };
+allow asterisk_t var_lib_t:file { create getattr lock open read unlink write };
